@@ -6,10 +6,7 @@ use crossterm::{
     terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
     ExecutableCommand,
 };
-use ratatui::{
-    prelude::*,
-    widgets::{block::Position, *},
-};
+use ratatui::{prelude::*, widgets::*};
 
 fn handle_events() -> io::Result<bool> {
     if event::poll(std::time::Duration::from_millis(50))? {
@@ -22,15 +19,14 @@ fn handle_events() -> io::Result<bool> {
     Ok(false)
 }
 
-fn ui(frame: &mut Frame) {
+fn ui(frame: &mut Frame, name: String) {
     frame.render_widget(
         Paragraph::new(Local::now().format("%H:%M:%S").to_string())
             .alignment(Alignment::Center)
             .block(
                 Block::default()
-                    .title(" Pomodoro Timer (press 'q' to quit) ")
-                    .title_position(Position::Bottom)
-                    .title_alignment(Alignment::Center)
+                    .title_top(Line::from(name.as_str()).centered())
+                    .title_bottom(Line::from("Pomodoro Timer (press 'q' to quit)").centered())
                     .cyan()
                     .border_style(Style::new().blue())
                     .borders(Borders::ALL)
@@ -40,14 +36,14 @@ fn ui(frame: &mut Frame) {
     );
 }
 
-pub fn render_ui() -> io::Result<()> {
+pub fn render_ui(name: String) -> io::Result<()> {
     enable_raw_mode()?;
     stdout().execute(EnterAlternateScreen)?;
     let mut terminal = Terminal::new(CrosstermBackend::new(stdout()))?;
 
     let mut should_quit = false;
     while !should_quit {
-        terminal.draw(ui)?;
+        terminal.draw(|frame| ui(frame, name.clone()))?;
         should_quit = handle_events()?;
     }
 

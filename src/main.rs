@@ -26,9 +26,9 @@ fn main() {
 }
 
 fn run_pomodoro(args: PomodoroArgs) -> Result<(), String> {
-    let msg = format!("Pomodoro timer starting! Work periods named {} will be {} minutes long, followed by short breaks of {} minutes. After completing {} work periods, you'll have a longer break of {} minutes.", args.name.unwrap(), args.duration, args.break_duration, args.cycles, args.long_break_duration);
+    let msg = format!("Pomodoro timer starting! Work periods named {} will be {} minutes long, followed by short breaks of {} minutes. After completing {} work periods, you'll have a longer break of {} minutes.", args.name.as_ref().unwrap_or(&"default".to_string()), args.duration, args.break_duration, args.cycles, args.long_break_duration);
     if args.visual {
-        ui::render_ui().expect("Failed to Render UI")
+        ui::render_ui(args.name.unwrap()).expect("Failed to Render UI")
     } else {
         println!("{}", msg)
     }

@@ -1,7 +1,12 @@
 use clap::Parser;
 
 #[derive(Parser, Debug)]
-#[clap(author, version, about = "A pomodoro timer CLI app")]
+#[clap(
+    name= "pomo",
+    author = "prajwal@devcoffee.me, atreya@kekvrose.me",
+    version = "0.1",
+    about = "A pomodoro timer CLI app"
+)]
 pub struct PomodoroArgs {
     #[clap(
         short = 'd',
