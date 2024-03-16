@@ -2,20 +2,12 @@ use std::time::Duration;
 use crate::timer::config::PpomoConfig;
 use crate::timer::mode::TimerMode;
 
-#[derive(Debug, Clone, Eq, PartialEq)]
-pub enum PlayState {
-    Playing,
-    Paused,
-    Stopped,
-}
-
 #[derive(Debug)]
 pub struct TimerState {
     config: PpomoConfig,
     pub millis_left_in_state: Duration,
     pub mode: TimerMode,
-    pub play_state: PlayState,
-    pub cycles_done: u8,
+    cycles_done: u8,
 }
 
 impl TimerState {
@@ -95,7 +87,7 @@ mod test {
         assert_eq!(Duration::from_millis(4), timer_state.millis_left_in_state);
         assert_eq!(0,timer_state.cycles_done);
     }
-    
+
 
     #[test]
     pub fn tick_to_zero() {
