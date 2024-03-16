@@ -9,6 +9,8 @@ pub struct PpomoConfig {
 }
 
 impl Default for PpomoConfig {
+    /// A bog-standard ppomodoro timing configuration.
+    /// Mainly used for testing.
     fn default() -> Self {
         Self{
             work_duration_minutes: 25,
