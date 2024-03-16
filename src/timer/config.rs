@@ -2,10 +2,21 @@ use crate::args::PomodoroArgs;
 
 #[derive(Debug, Eq, PartialEq, Clone)]
 pub struct PpomoConfig {
-    work_duration_minutes: u8,
-    break_duration_minutes: u8,
-    long_break_duration_minutes: u8,
-    cycles: u8,
+    pub work_duration_minutes: u8,
+    pub break_duration_minutes: u8,
+    pub long_break_duration_minutes: u8,
+    pub cycles_per_long_break: u8,
+}
+
+impl Default for PpomoConfig {
+    fn default() -> Self {
+        Self{
+            work_duration_minutes: 25,
+            break_duration_minutes: 5,
+            long_break_duration_minutes: 15,
+            cycles_per_long_break: 4,
+        }
+    }
 }
 
 impl From<PomodoroArgs> for PpomoConfig{
@@ -14,7 +25,7 @@ impl From<PomodoroArgs> for PpomoConfig{
             work_duration_minutes: value.duration,
             break_duration_minutes: value.break_duration,
             long_break_duration_minutes: value.long_break_duration,
-            cycles: value.cycles
+            cycles_per_long_break: value.cycles
         }
     }
 }
