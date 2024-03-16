@@ -5,8 +5,8 @@ use crate::timer::mode::TimerMode;
 #[derive(Debug)]
 pub struct TimerState {
     config: PpomoConfig,
-    pub millis_left_in_state: Duration,
-    pub mode: TimerMode,
+    millis_left_in_state: Duration,
+    mode: TimerMode,
     cycles_done: u8,
 }
 
@@ -42,6 +42,8 @@ impl TimerState {
     fn get_state(&self)->TimerMode{
         self.mode.clone()
     }
+    fn get_duration_left(&self)->Duration{self.millis_left_in_state}
+    fn get_cycles_done(&self)->u8{self.cycles_done}
 }
 
 
@@ -49,9 +51,7 @@ impl TimerState {
 mod test {
     use std::time::Duration;
     use crate::timer::config::PpomoConfig;
-    use crate::timer::mode::TimerMode;
     use crate::timer::mode::TimerMode::{Break, Work};
-    use crate::timer::state::PlayState::Playing;
     use crate::timer::state::TimerState;
 
     #[test]
@@ -59,7 +59,6 @@ mod test {
         let ppomoconfig = PpomoConfig::default();
         let mut timer_state = TimerState {
             millis_left_in_state: Duration::from_millis(1000),
-            play_state: Playing,
             mode: Break,
             cycles_done: 0,
             config: ppomoconfig.clone(),
@@ -75,7 +74,6 @@ mod test {
         let ppomoconfig = PpomoConfig::default();
         let mut timer_state = TimerState {
             millis_left_in_state: Duration::from_millis(1004),
-            play_state: Playing,
             mode: Break,
             cycles_done: 0,
             config: ppomoconfig.clone(),
@@ -94,7 +92,6 @@ mod test {
         let ppomo_config = PpomoConfig::default();
         let mut timer_state = TimerState {
             millis_left_in_state: Duration::from_millis(1000),
-            play_state: Playing,
             mode: Break,
             cycles_done: 0,
             config: ppomo_config.clone(),
@@ -110,7 +107,6 @@ mod test {
         let ppomoconfig = PpomoConfig::default();
         let mut timer_state = TimerState {
             millis_left_in_state: Duration::from_millis(1000),
-            play_state: Playing,
             mode: Break,
             cycles_done: 0,
             config: ppomoconfig.clone(),

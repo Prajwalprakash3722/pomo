@@ -27,7 +27,8 @@ impl From<PomodoroArgs> for PpomoConfig{
             work_duration_minutes: value.duration,
             break_duration_minutes: value.break_duration,
             long_break_duration_minutes: value.long_break_duration,
-            cycles_per_long_break: value.cycles
+            // FIXME: Allow for customization
+            cycles_per_long_break: 4
         }
     }
 }
