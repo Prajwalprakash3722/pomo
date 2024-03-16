@@ -1,7 +1,7 @@
 use std::process::exit;
 
 use clap::Parser;
-
+mod timer;
 mod args;
 
 fn main() {
