@@ -30,14 +30,14 @@ impl TimerMode {
             }
         }
     }
-    const TIMER_MINUTES_TO_MILLIS: u64 = 60;
+    const TIMER_MINUTES_IN_SEC: u64 = 60;
     pub fn get_new_time_left_millis_for_state(&self, state: &PpomoConfig) -> Duration {
         let new_time_minutes = match self {
             TimerMode::Work => { state.work_duration_minutes }
             TimerMode::Break => { state.break_duration_minutes }
             TimerMode::LongBreak => { state.long_break_duration_minutes }
         } as u64;
-        Duration::from_secs(new_time_minutes * 60)
+        Duration::from_secs(new_time_minutes * Self::TIMER_MINUTES_IN_SEC)
     }
 }
 
