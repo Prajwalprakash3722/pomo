@@ -1,5 +1,5 @@
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
-enum TimerStateError {
+pub enum TimerStateError {
     InvalidState,
 }
 
