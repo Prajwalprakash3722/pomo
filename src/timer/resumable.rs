@@ -1,5 +1,6 @@
 use std::time::Duration;
 use crate::timer::config::PpomoConfig;
+use crate::timer::mode::PomodoroTimerMode;
 use crate::timer::result::TimerResult;
 use crate::timer::state::PomodoroTimer;
 use crate::timer::timer::Timer;
@@ -29,6 +30,8 @@ impl ResumablePomodoroTimer {
     pub fn set_state(&mut self, new_state: PlayState, time_elapsed: Option<Duration>) {
         self.play_state = new_state;
     }
+    
+    
 }
 impl Timer for ResumablePomodoroTimer{
 
@@ -42,6 +45,14 @@ impl Timer for ResumablePomodoroTimer{
                 Ok(())
             }
         }
+    }
+
+    fn get_state(&self) -> PomodoroTimerMode {
+        self.timer.get_state()
+    }
+
+    fn get_duration_left(&self) -> Duration {
+        self.timer.get_duration_left()
     }
 }
 

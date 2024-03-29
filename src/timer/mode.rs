@@ -2,40 +2,40 @@ use std::time::Duration;
 use crate::timer::config::PpomoConfig;
 
 #[derive(Debug, Clone, Eq, PartialEq)]
-pub enum TimerMode {
+pub enum PomodoroTimerMode {
     Work,
     Break,
     LongBreak,
 }
 
-impl Default for TimerMode {
+impl Default for PomodoroTimerMode {
     fn default() -> Self {
         Self::Work
     }
 }
 
-impl TimerMode {
+impl PomodoroTimerMode {
     /// Next
-    pub fn next(&self, works_done: u8, works_per_long_break: u8) -> TimerMode {
+    pub fn next(&self, works_done: u8, works_per_long_break: u8) -> PomodoroTimerMode {
         match self {
-            TimerMode::Work => {
+            PomodoroTimerMode::Work => {
                 if works_done % works_per_long_break == 0 {
-                    TimerMode::LongBreak
+                    PomodoroTimerMode::LongBreak
                 } else {
-                    TimerMode::Break
+                    PomodoroTimerMode::Break
                 }
             }
-            TimerMode::Break | TimerMode::LongBreak => {
-                TimerMode::Work
+            PomodoroTimerMode::Break | PomodoroTimerMode::LongBreak => {
+                PomodoroTimerMode::Work
             }
         }
     }
     const TIMER_MINUTES_IN_SEC: u64 = 60;
     pub fn get_new_time_left_millis_for_state(&self, state: &PpomoConfig) -> Duration {
         let new_time_minutes = match self {
-            TimerMode::Work => { state.work_duration_minutes }
-            TimerMode::Break => { state.break_duration_minutes }
-            TimerMode::LongBreak => { state.long_break_duration_minutes }
+            PomodoroTimerMode::Work => { state.work_duration_minutes }
+            PomodoroTimerMode::Break => { state.break_duration_minutes }
+            PomodoroTimerMode::LongBreak => { state.long_break_duration_minutes }
         } as u64;
         Duration::from_secs(new_time_minutes * Self::TIMER_MINUTES_IN_SEC)
     }
@@ -43,7 +43,7 @@ impl TimerMode {
 
 #[cfg(test)]
 mod test {
-    use crate::timer::mode::TimerMode::*;
+    use crate::timer::mode::PomodoroTimerMode::*;
 
     #[test]
     pub fn test_next_for_break() {
