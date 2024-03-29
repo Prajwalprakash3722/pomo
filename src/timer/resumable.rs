@@ -26,18 +26,16 @@ impl ResumablePomodoroTimer {
             play_state,
         }
     }
-
-    pub fn set_state(&mut self, new_state: PlayState, time_elapsed: Option<Duration>) {
+    /// Set a new state, and optionally indicate how many ticks it has been since last call.
+    pub fn set_state(&mut self, new_state: PlayState) {
         self.play_state = new_state;
     }
-    
-    
 }
-impl Timer for ResumablePomodoroTimer{
 
+impl Timer for ResumablePomodoroTimer {
     fn tick(&mut self, time_elapsed_since: Duration) -> TimerResult<()> {
         // propagate ticks only if playing
-        match self.play_state{
+        match self.play_state {
             PlayState::Playing => {
                 self.timer.tick(time_elapsed_since)
             }
@@ -58,16 +56,32 @@ impl Timer for ResumablePomodoroTimer{
 
 
 #[cfg(test)]
-mod tests{
+mod tests {
     use std::time::Duration;
     use crate::timer::config::PpomoConfig;
-    use crate::timer::resumable::ResumablePomodoroTimer;
+    use crate::timer::resumable::{PlayState, ResumablePomodoroTimer};
     use crate::timer::timer::Timer;
 
     #[test]
-    fn test_normal_play(){
-        let mut timer = ResumablePomodoroTimer::new(PpomoConfig::default(),0);
-        timer.tick(Duration::from_millis(100)).unwrap();
+    fn test_stopped_play() {
+        let mut timer = ResumablePomodoroTimer::new(PpomoConfig::default(), 0);
+        timer.tick(Duration::from_secs(100)).unwrap();
+        assert_eq!(Duration::from_secs(25 * 60), timer.get_duration_left());
+    }
 
+    #[test]
+    fn test_normal_play() {
+        let mut timer = ResumablePomodoroTimer::new(PpomoConfig::default(), 0);
+        timer.set_state(PlayState::Playing);
+        timer.tick(Duration::from_secs(100)).unwrap();
+        assert_eq!(Duration::from_secs(25 * 60 - 100), timer.get_duration_left());
+    }
+
+    #[test]
+    fn test_paused_play() {
+        let mut timer = ResumablePomodoroTimer::new(PpomoConfig::default(), 0);
+        timer.set_state(PlayState::Paused);
+        timer.tick(Duration::from_secs(100)).unwrap();
+        assert_eq!(Duration::from_secs(25 * 60), timer.get_duration_left());
     }
 }
