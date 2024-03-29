@@ -80,7 +80,7 @@ mod test {
     use std::time::Duration;
     use crate::timer::config::PomoConfig;
     use crate::timer::mode::PomodoroTimerMode::{Break, Work};
-    use crate::timer::state::PomodoroTimer;
+    use crate::timer::pomo::PomodoroTimer;
     use crate::timer::timer::Timer;
 
     #[test]

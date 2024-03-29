@@ -8,11 +8,6 @@ pub enum PomodoroTimerMode {
     LongBreak,
 }
 
-impl Default for PomodoroTimerMode {
-    fn default() -> Self {
-        Self::Work
-    }
-}
 
 impl PomodoroTimerMode {
     /// Next

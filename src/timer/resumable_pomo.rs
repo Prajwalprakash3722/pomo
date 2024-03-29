@@ -2,7 +2,7 @@ use std::time::Duration;
 use crate::timer::config::PomoConfig;
 use crate::timer::mode::PomodoroTimerMode;
 use crate::timer::result::TimerResult;
-use crate::timer::state::PomodoroTimer;
+use crate::timer::pomo::PomodoroTimer;
 use crate::timer::timer::Timer;
 
 enum PlayState {
@@ -18,6 +18,7 @@ struct ResumablePomodoroTimer {
 }
 
 impl ResumablePomodoroTimer {
+    /// Create a new stopped Pomodoro Timer
     pub fn new(ppomo_config: PomoConfig, cycles_done: u8) -> Self {
         let timer = PomodoroTimer::new(ppomo_config, cycles_done);
         let play_state = PlayState::Stopped;
@@ -76,7 +77,7 @@ impl Timer for ResumablePomodoroTimer {
 mod tests {
     use std::time::Duration;
     use crate::timer::config::PomoConfig;
-    use crate::timer::resumable::{PlayState, ResumablePomodoroTimer};
+    use crate::timer::resumable_pomo::{PlayState, ResumablePomodoroTimer};
     use crate::timer::timer::Timer;
 
     #[test]

@@ -2,7 +2,6 @@ use std::time::Duration;
 use crate::timer::config::PomoConfig;
 use crate::timer::mode::PomodoroTimerMode;
 use crate::timer::result::TimerResult;
-use crate::timer::state::PomodoroTimer;
 
 pub trait Timer{
     /// Update timer state, given that a specified timer has been spent since last tick.
