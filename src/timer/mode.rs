@@ -1,5 +1,5 @@
 use std::time::Duration;
-use crate::timer::config::PpomoConfig;
+use crate::timer::config::PomoConfig;
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub enum PomodoroTimerMode {
@@ -31,7 +31,7 @@ impl PomodoroTimerMode {
         }
     }
     const TIMER_MINUTES_IN_SEC: u64 = 60;
-    pub fn get_new_time_left_millis_for_state(&self, state: &PpomoConfig) -> Duration {
+    pub fn get_new_time_left_millis_for_state(&self, state: &PomoConfig) -> Duration {
         let new_time_minutes = match self {
             PomodoroTimerMode::Work => { state.work_duration_minutes }
             PomodoroTimerMode::Break => { state.break_duration_minutes }

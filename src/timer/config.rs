@@ -1,14 +1,14 @@
 use crate::args::PomodoroArgs;
 
 #[derive(Debug, Eq, PartialEq, Clone)]
-pub struct PpomoConfig {
+pub struct PomoConfig {
     pub work_duration_minutes: u8,
     pub break_duration_minutes: u8,
     pub long_break_duration_minutes: u8,
     pub cycles_per_long_break: u8,
 }
 
-impl Default for PpomoConfig {
+impl Default for PomoConfig {
     /// A bog-standard ppomodoro timing configuration.
     /// Mainly used for testing.
     fn default() -> Self {
@@ -21,7 +21,7 @@ impl Default for PpomoConfig {
     }
 }
 
-impl From<PomodoroArgs> for PpomoConfig{
+impl From<PomodoroArgs> for PomoConfig {
     fn from(value: PomodoroArgs) -> Self {
         Self{
             work_duration_minutes: value.duration,
