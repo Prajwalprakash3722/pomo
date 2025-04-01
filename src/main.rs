@@ -1,6 +1,6 @@
 use args::PomodoroArgs;
 use clap::Parser;
-
+mod timer;
 mod args;
 mod ui;
 
